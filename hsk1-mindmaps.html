@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HSK 1 · Карты иероглифов</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500;1,600&family=Inter:wght@400;500;600;700&family=Noto+Serif+SC:wght@400;500;700&family=Noto+Sans+SC:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FFF8E7;
+    --cream-2:#FBEFCF;
+    --paper:#FFFDF6;
+    --sangria:#930500;
+    --sangria-deep:#6B0300;
+    --sangria-bright:#BA1308;
+    --corn:#95BBEA;
+    --corn-deep:#4E7FC4;
+    --corn-soft:#D6E4F5;
+    --ink:#3A1009;
+    --ink-soft:#6E382E;
+    --muted:#A07A6E;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:
+      /* лёгкая «гингем»-клетка в углах, как на референсе */
+      repeating-linear-gradient(0deg, rgba(149,187,234,.16) 0 11px, transparent 11px 22px),
+      repeating-linear-gradient(90deg, rgba(149,187,234,.16) 0 11px, transparent 11px 22px),
+      var(--cream);
+    background-attachment:fixed;
+    background-position:right top, right top;
+    background-size:220px 220px,220px 220px,auto;
+    background-repeat:no-repeat,no-repeat,repeat;
+    color:var(--ink);
+    font-family:"Inter",system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+    line-height:1.5;
+  }
+  .hanzi{font-family:"Noto Serif SC","Noto Sans SC",serif;}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:34px 26px 80px;}
+
+  /* ---------- Header ---------- */
+  header.masthead{
+    border-bottom:2px solid var(--sangria);
+    padding-bottom:26px;
+    margin-bottom:30px;
+    position:relative;
+  }
+  .dossier-tag{
+    display:inline-flex;align-items:center;gap:9px;
+    font-size:11px;letter-spacing:.32em;text-transform:uppercase;
+    color:var(--corn-deep);font-weight:600;
+    margin-bottom:18px;
+  }
+  .dossier-tag::before{content:"";width:26px;height:2px;background:var(--corn);}
+  .dossier-tag .num{color:var(--muted);letter-spacing:.16em;}
+  h1{
+    font-family:"Cormorant Garamond",serif;
+    font-weight:600;
+    font-size:clamp(40px,7vw,76px);
+    line-height:.96;
+    margin:0 0 16px;
+    letter-spacing:-.01em;
+    color:var(--sangria);
+  }
+  h1 em{font-style:italic;color:var(--corn-deep);}
+  .lede{
+    max-width:640px;
+    color:var(--ink-soft);
+    font-family:"Cormorant Garamond",serif;
+    font-size:clamp(18px,2.2vw,23px);
+    line-height:1.45;
+  }
+  .lede b{color:var(--sangria);font-weight:600;}
+  .stat-row{display:flex;flex-wrap:wrap;gap:34px;margin-top:26px;}
+  .stat{display:flex;flex-direction:column;gap:2px;}
+  .stat .n{font-family:"Cormorant Garamond",serif;font-weight:600;font-size:36px;line-height:1;color:var(--sangria);}
+  .stat .l{font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);}
+
+  /* ---------- Layout ---------- */
+  .layout{display:grid;grid-template-columns:248px 1fr;gap:30px;align-items:start;}
+  @media(max-width:820px){.layout{grid-template-columns:1fr;}}
+
+  /* ---------- Index ---------- */
+  .index-title{font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--corn-deep);font-weight:600;margin:2px 0 14px;}
+  .hub-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(70px,1fr));gap:8px;}
+  @media(max-width:820px){.hub-list{grid-template-columns:repeat(auto-fill,minmax(64px,1fr));}}
+  .hub-chip{
+    background:var(--paper);
+    border:1.5px solid var(--corn-soft);
+    border-radius:13px;
+    padding:11px 6px 9px;
+    text-align:center;
+    cursor:pointer;
+    transition:transform .18s ease,border-color .18s ease,background .18s ease,box-shadow .18s ease;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .hub-chip:hover{transform:translateY(-2px);border-color:var(--corn-deep);box-shadow:0 6px 16px rgba(78,127,196,.18);}
+  .hub-chip.active{
+    background:linear-gradient(160deg,var(--sangria-bright) 0%,var(--sangria) 60%,var(--sangria-deep) 100%);
+    border-color:var(--sangria-deep);
+    box-shadow:0 8px 20px rgba(147,5,0,.28);
+  }
+  .hub-chip .c{font-size:26px;line-height:1.1;color:var(--ink);}
+  .hub-chip.active .c{color:var(--cream);}
+  .hub-chip .p{font-size:10.5px;color:var(--muted);margin-top:2px;font-style:italic;}
+  .hub-chip.active .p{color:var(--cream-2);}
+  .hub-chip .cnt{display:inline-block;margin-top:5px;font-size:9px;letter-spacing:.08em;color:var(--corn-deep);font-weight:600;}
+  .hub-chip.active .cnt{color:var(--corn-soft);}
+
+  /* ---------- Stage ---------- */
+  .stage-card{
+    background:var(--paper);
+    border:1.5px solid var(--corn);
+    border-radius:20px;
+    padding:22px 22px 26px;
+    position:relative;
+    overflow:hidden;
+    min-height:520px;
+    box-shadow:0 14px 40px rgba(147,5,0,.07);
+  }
+  .stage-card::before{
+    content:"";position:absolute;inset:0;
+    background-image:radial-gradient(circle at 1px 1px,rgba(147,5,0,.05) 1px,transparent 0);
+    background-size:24px 24px;pointer-events:none;
+  }
+  .stage-head{
+    display:flex;justify-content:space-between;align-items:center;
+    gap:14px;margin-bottom:6px;position:relative;z-index:2;
+  }
+  .stage-head .meaning{
+    font-family:"Cormorant Garamond",serif;font-style:italic;font-weight:600;
+    font-size:21px;color:var(--sangria);
+  }
+  .stage-head .ref{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--corn-deep);font-weight:600;white-space:nowrap;}
+
+  .map-area{position:relative;width:100%;height:520px;}
+  @media(max-width:520px){.map-area{height:430px;}}
+  svg.links{position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none;}
+
+  .node{
+    position:absolute;transform:translate(-50%,-50%);z-index:2;opacity:0;
+    animation:pop .5s cubic-bezier(.2,.8,.3,1) forwards;
+  }
+  @keyframes pop{from{opacity:0;transform:translate(-50%,-50%) scale(.82);}to{opacity:1;transform:translate(-50%,-50%) scale(1);}}
+
+  .center-node{
+    width:128px;height:128px;border-radius:50%;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    background:radial-gradient(circle at 38% 30%,var(--sangria-bright) 0%,var(--sangria) 48%,var(--sangria-deep) 100%);
+    border:3px solid var(--cream);
+    box-shadow:0 0 0 4px rgba(149,187,234,.5),0 14px 36px rgba(147,5,0,.35);
+  }
+  @media(max-width:520px){.center-node{width:104px;height:104px;}}
+  .center-node .c{font-size:54px;line-height:1;color:#fff;text-shadow:0 2px 10px rgba(0,0,0,.25);}
+  @media(max-width:520px){.center-node .c{font-size:44px;}}
+  .center-node .p{font-size:12px;font-style:italic;color:var(--cream);margin-top:3px;letter-spacing:.02em;}
+
+  .word-node{
+    width:152px;
+    background:var(--paper);
+    border:1.5px solid var(--corn);
+    border-radius:14px;
+    padding:11px 12px 12px;
+    text-align:center;
+    box-shadow:0 8px 22px rgba(78,127,196,.16);
+    transition:border-color .18s ease,transform .18s ease,box-shadow .18s ease;
+  }
+  @media(max-width:520px){.word-node{width:124px;padding:9px 9px 10px;}}
+  .word-node:hover{border-color:var(--sangria);transform:translate(-50%,-50%) scale(1.05);box-shadow:0 12px 26px rgba(147,5,0,.2);}
+  .word-node .w{font-size:25px;line-height:1.15;color:var(--ink);}
+  @media(max-width:520px){.word-node .w{font-size:21px;}}
+  .word-node .w .shared{color:var(--sangria);font-weight:700;}
+  .word-node .py{font-size:12px;font-style:italic;color:var(--corn-deep);margin-top:3px;font-weight:500;}
+  .word-node .ru{font-size:11.5px;color:var(--ink-soft);margin-top:3px;line-height:1.3;}
+
+  .hint{text-align:center;color:var(--muted);font-size:11px;letter-spacing:.14em;text-transform:uppercase;margin-top:12px;position:relative;z-index:2;}
+  .hl-red{color:var(--sangria);font-weight:600;}
+
+  footer.foot{
+    margin-top:34px;border-top:2px solid var(--corn);padding-top:20px;
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;
+    font-size:11px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;
+  }
+  footer.foot .brand{color:var(--sangria);font-weight:600;}
+
+  @media(prefers-reduced-motion:reduce){.node{animation:none;opacity:1;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="dossier-tag">HSK 1 <span class="num">/ карты иероглифов</span></div>
+    <h1>Один иероглиф —<br><em>десятки слов.</em></h1>
+    <p class="lede">В китайском не нужно зубрить каждое слово с нуля. Выучи <b>один иероглиф</b> — и начнёшь узнавать его в словах повсюду. Эти карты показывают, как связаны слова HSK 1.</p>
+    <div class="stat-row">
+      <div class="stat"><span class="n">150</span><span class="l">слов в HSK 1</span></div>
+      <div class="stat"><span class="n" id="hubCount">—</span><span class="l">иероглифов&#8209;узлов</span></div>
+      <div class="stat"><span class="n">1×</span><span class="l">выучил — узнаёшь везде</span></div>
+    </div>
+  </header>
+
+  <div class="layout">
+    <aside>
+      <div class="index-title">Иероглифы&#8209;узлы</div>
+      <div class="hub-list" id="hubList"></div>
+    </aside>
+
+    <main>
+      <div class="stage-card">
+        <div class="stage-head">
+          <span class="meaning hanzi" id="stageMeaning"></span>
+          <div class="ref" id="stageRef"></div>
+        </div>
+        <div class="map-area" id="mapArea">
+          <svg class="links" id="links" preserveAspectRatio="none"></svg>
+        </div>
+        <div class="hint">Наведи на слово · <span class="hl-red">красным</span> выделен общий иероглиф</div>
+      </div>
+    </main>
+  </div>
+
+  <footer class="foot">
+    <span>School Might · китайский язык</span>
+    <span class="brand">Я потратила 10 лет. Тебе хватит одного.</span>
+  </footer>
+</div>
+
+<script>
+const HUBS = [
+  { c:"电", p:"diàn", m:"электричество", words:[
+      {w:"电脑", idx:[0], py:"diànnǎo", ru:"компьютер"},
+      {w:"电视", idx:[0], py:"diànshì", ru:"телевизор"},
+      {w:"电影", idx:[0], py:"diànyǐng", ru:"фильм, кино"},
+      {w:"电话", idx:[0], py:"diànhuà", ru:"телефон (打电话 — звонить)"},
+  ]},
+  { c:"天", p:"tiān", m:"день · небо", words:[
+      {w:"今天", idx:[1], py:"jīntiān", ru:"сегодня"},
+      {w:"明天", idx:[1], py:"míngtiān", ru:"завтра"},
+      {w:"昨天", idx:[1], py:"zuótiān", ru:"вчера"},
+      {w:"天气", idx:[0], py:"tiānqì", ru:"погода"},
+  ]},
+  { c:"学", p:"xué", m:"учиться", words:[
+      {w:"学生", idx:[0], py:"xuéshēng", ru:"ученик, студент"},
+      {w:"学习", idx:[0], py:"xuéxí", ru:"учиться, учёба"},
+      {w:"学校", idx:[0], py:"xuéxiào", ru:"школа"},
+      {w:"同学", idx:[1], py:"tóngxué", ru:"одноклассник"},
+  ]},
+  { c:"子", p:"zi", m:"суффикс предметов", words:[
+      {w:"杯子", idx:[1], py:"bēizi", ru:"стакан, чашка"},
+      {w:"儿子", idx:[1], py:"érzi", ru:"сын"},
+      {w:"桌子", idx:[1], py:"zhuōzi", ru:"стол"},
+      {w:"椅子", idx:[1], py:"yǐzi", ru:"стул"},
+  ]},
+  { c:"儿", p:"ér", m:"сын · суффикс", words:[
+      {w:"儿子", idx:[0], py:"érzi", ru:"сын"},
+      {w:"女儿", idx:[1], py:"nǚ'ér", ru:"дочь"},
+      {w:"哪儿", idx:[1], py:"nǎr", ru:"где"},
+      {w:"一点儿", idx:[2], py:"yìdiǎnr", ru:"немного, чуть-чуть"},
+  ]},
+  { c:"午", p:"wǔ", m:"полдень", words:[
+      {w:"上午", idx:[1], py:"shàngwǔ", ru:"первая половина дня, утро"},
+      {w:"中午", idx:[1], py:"zhōngwǔ", ru:"полдень"},
+      {w:"下午", idx:[1], py:"xiàwǔ", ru:"вторая половина дня"},
+  ]},
+  { c:"生", p:"shēng", m:"жизнь · рождаться", words:[
+      {w:"学生", idx:[1], py:"xuéshēng", ru:"ученик, студент"},
+      {w:"先生", idx:[1], py:"xiānsheng", ru:"господин, мужчина"},
+      {w:"医生", idx:[1], py:"yīshēng", ru:"врач"},
+  ]},
+  { c:"下", p:"xià", m:"низ · вниз", words:[
+      {w:"下", idx:[0], py:"xià", ru:"под, вниз, следующий"},
+      {w:"下午", idx:[0], py:"xiàwǔ", ru:"вторая половина дня"},
+      {w:"下雨", idx:[0], py:"xiàyǔ", ru:"идёт дождь"},
+  ]},
+  { c:"上", p:"shàng", m:"верх · вверх", words:[
+      {w:"上", idx:[0], py:"shàng", ru:"на, вверх, прошлый"},
+      {w:"上午", idx:[0], py:"shàngwǔ", ru:"первая половина дня, утро"},
+  ]},
+  { c:"中", p:"zhōng", m:"середина · Китай", words:[
+      {w:"中国", idx:[0], py:"Zhōngguó", ru:"Китай"},
+      {w:"中午", idx:[0], py:"zhōngwǔ", ru:"полдень"},
+  ]},
+  { c:"果", p:"guǒ", m:"плод", words:[
+      {w:"苹果", idx:[1], py:"píngguǒ", ru:"яблоко"},
+      {w:"水果", idx:[1], py:"shuǐguǒ", ru:"фрукты"},
+  ]},
+  { c:"医", p:"yī", m:"медицина", words:[
+      {w:"医生", idx:[0], py:"yīshēng", ru:"врач"},
+      {w:"医院", idx:[0], py:"yīyuàn", ru:"больница"},
+  ]},
+  { c:"看", p:"kàn", m:"смотреть", words:[
+      {w:"看", idx:[0], py:"kàn", ru:"смотреть, читать"},
+      {w:"看见", idx:[0], py:"kànjiàn", ru:"увидеть, заметить"},
+  ]},
+  { c:"面", p:"miàn", m:"сторона · поверхность", words:[
+      {w:"前面", idx:[1], py:"qiánmiàn", ru:"впереди, перед"},
+      {w:"后面", idx:[1], py:"hòumiàn", ru:"сзади, позади"},
+  ]},
+  { c:"车", p:"chē", m:"машина · транспорт", words:[
+      {w:"出租车", idx:[2], py:"chūzūchē", ru:"такси"},
+      {w:"火车站", idx:[1], py:"huǒchēzhàn", ru:"вокзал (火车 — поезд)"},
+  ]},
+  { c:"饭", p:"fàn", m:"еда · варёный рис", words:[
+      {w:"米饭", idx:[1], py:"mǐfàn", ru:"варёный рис"},
+      {w:"饭馆", idx:[0], py:"fànguǎn", ru:"ресторан, столовая"},
+  ]},
+  { c:"话", p:"huà", m:"речь · слова", words:[
+      {w:"电话", idx:[1], py:"diànhuà", ru:"телефон (打电话 — звонить)"},
+      {w:"说话", idx:[1], py:"shuōhuà", ru:"говорить, разговаривать"},
+  ]},
+  { c:"多", p:"duō", m:"много", words:[
+      {w:"多", idx:[0], py:"duō", ru:"много, насколько"},
+      {w:"多少", idx:[0], py:"duōshao", ru:"сколько"},
+  ]},
+  { c:"少", p:"shǎo", m:"мало", words:[
+      {w:"少", idx:[0], py:"shǎo", ru:"мало"},
+      {w:"多少", idx:[1], py:"duōshao", ru:"сколько"},
+  ]},
+  { c:"点", p:"diǎn", m:"точка · час", words:[
+      {w:"点", idx:[0], py:"diǎn", ru:"час (о времени), точка"},
+      {w:"一点儿", idx:[1], py:"yìdiǎnr", ru:"немного, чуть-чуть"},
+  ]},
+  { c:"没", p:"méi", m:"не · нет", words:[
+      {w:"没", idx:[0], py:"méi", ru:"не, не иметь"},
+      {w:"没关系", idx:[0], py:"méi guānxi", ru:"ничего страшного"},
+  ]},
+  { c:"小", p:"xiǎo", m:"маленький", words:[
+      {w:"小", idx:[0], py:"xiǎo", ru:"маленький"},
+      {w:"小姐", idx:[0], py:"xiǎojiě", ru:"девушка, мисс"},
+  ]},
+  { c:"我", p:"wǒ", m:"я", words:[
+      {w:"我", idx:[0], py:"wǒ", ru:"я"},
+      {w:"我们", idx:[0], py:"wǒmen", ru:"мы"},
+  ]},
+  { c:"气", p:"qì", m:"воздух · дух", words:[
+      {w:"天气", idx:[1], py:"tiānqì", ru:"погода"},
+      {w:"不客气", idx:[2], py:"bú kèqi", ru:"не за что, пожалуйста"},
+  ]},
+];
+
+const hubListEl = document.getElementById('hubList');
+const mapArea   = document.getElementById('mapArea');
+const linksSvg  = document.getElementById('links');
+const meaningEl = document.getElementById('stageMeaning');
+const refEl     = document.getElementById('stageRef');
+document.getElementById('hubCount').textContent = HUBS.length;
+
+let activeIndex = 0;
+
+function buildIndex(){
+  HUBS.forEach((h,i)=>{
+    const chip=document.createElement('div');
+    chip.className='hub-chip'+(i===0?' active':'');
+    chip.innerHTML=`<div class="c hanzi">${h.c}</div><div class="p">${h.p}</div><div class="cnt">${h.words.length} слова</div>`;
+    chip.addEventListener('click',()=>select(i));
+    hubListEl.appendChild(chip);
+  });
+}
+
+function hanziWithHighlight(word, idxArr){
+  return [...word].map((ch,i)=> idxArr.includes(i) ? `<span class="shared">${ch}</span>` : ch ).join('');
+}
+
+function select(i){
+  activeIndex=i;
+  [...hubListEl.children].forEach((c,k)=>c.classList.toggle('active',k===i));
+  render(HUBS[i]);
+}
+
+function render(hub){
+  [...mapArea.querySelectorAll('.node')].forEach(n=>n.remove());
+  linksSvg.innerHTML='';
+
+  const rect=mapArea.getBoundingClientRect();
+  const W=rect.width||700, H=rect.height||520;
+  const cx=W/2, cy=H/2;
+
+  meaningEl.textContent=`${hub.c}  ${hub.p} — ${hub.m}`;
+  refEl.textContent=`узел ${String(activeIndex+1).padStart(2,'0')} / ${HUBS.length}`;
+
+  const center=document.createElement('div');
+  center.className='node center-node';
+  center.style.left=cx+'px'; center.style.top=cy+'px';
+  center.innerHTML=`<div class="c hanzi">${hub.c}</div><div class="p">${hub.p}</div>`;
+  mapArea.appendChild(center);
+
+  const n=hub.words.length;
+  const baseR=Math.min(W,H)*0.34;
+  const R= n<=2 ? baseR*0.95 : baseR;
+  const startAngle=-90;
+
+  const defs=document.createElementNS('http://www.w3.org/2000/svg','defs');
+  defs.innerHTML=`<linearGradient id="thread" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#930500" stop-opacity="0.85"/>
+      <stop offset="100%" stop-color="#95BBEA" stop-opacity="0.85"/>
+    </linearGradient>`;
+  linksSvg.appendChild(defs);
+
+  hub.words.forEach((wd,k)=>{
+    const ang=(startAngle + k*(360/n)) * Math.PI/180;
+    const x=cx+R*Math.cos(ang);
+    const y=cy+R*Math.sin(ang);
+
+    const line=document.createElementNS('http://www.w3.org/2000/svg','line');
+    line.setAttribute('x1',cx); line.setAttribute('y1',cy);
+    line.setAttribute('x2',x);  line.setAttribute('y2',y);
+    line.setAttribute('stroke','url(#thread)');
+    line.setAttribute('stroke-width','2');
+    linksSvg.appendChild(line);
+
+    const node=document.createElement('div');
+    node.className='node word-node';
+    node.style.left=x+'px'; node.style.top=y+'px';
+    node.style.animationDelay=(0.06*k+0.05)+'s';
+    node.innerHTML=`<div class="w hanzi">${hanziWithHighlight(wd.w,wd.idx)}</div>`+
+                   `<div class="py">${wd.py}</div>`+
+                   `<div class="ru">${wd.ru}</div>`;
+    mapArea.appendChild(node);
+  });
+}
+
+buildIndex();
+render(HUBS[0]);
+
+let rt;
+window.addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(()=>render(HUBS[activeIndex]),120);});
+</script>
+</body>
+</html>
